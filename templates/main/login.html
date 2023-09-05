@@ -1,0 +1,118 @@
+{% extends 'main/app.html' %}
+{% load static %}
+
+
+{% block title %}
+Sign Up
+{% endblock title %}
+
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/create-user.css' %}">
+<link rel="stylesheet" href="{% static 'css/login-user.css' %}">
+{% endblock css %}
+
+{% block content %}
+<div class="main-wrapper login-body">
+    <div class="login-wrapper">
+        <div class="container">
+            <div class="loginbox">
+                <div class="login-left">
+                    <img class="img-fluid" src="{% static 'img/login.png' %}" alt="Logo">
+                </div>
+                <div class="login-right">
+                    <div class="login-right-wrap">
+                        <h1>Welcome to Preskool</h1>
+                        <p class="account-subtitle">Need an account? <a href="{% url 'user:create-user' %}">Sign Up</a></p>
+                        <h2>Sign in</h2>
+
+                        <form class="needs-validation" method="POST" action="{% url 'user:login' %}" novalidate>
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label>Username <span class="login-danger">*</span></label>
+                                <input name="username" value="{{username}}" class="form-control" type="text" required>
+                                <span class="profile-views"><i class="fas fa-user-circle"></i></span>
+                                <div class="invalid-feedback">
+                                    Enter a username.
+                                </div>
+                                <div class="create-user-form-validate">
+                                    {% if error_username %}
+                                    {{error_username}}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Password <span class="login-danger">*</span></label>
+                                <input name="password" class="form-control pass-confirm" type="password" required>
+                                <span class="profile-views feather-eye reg-toggle-password"></span>
+                                <div class="invalid-feedback">
+                                    Please enter password.
+                                </div>
+                                <div class="create-user-form-validate">
+                                    {% if error_password %}
+                                    {{error_password}}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="forgotpass">
+                                <div class="remember-me">
+                                    <label class="custom_check mr-2 mb-0 d-inline-flex remember-me"> Remember me
+                                        <input type="checkbox" name="radio">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <a href="forgot-password.html">Forgot Password?</a>
+                            </div>
+
+                            {% if messages %}
+                            <ul class="messages">
+                                {% for message in messages %}
+                                    <li
+                                    {% if message.tags == "success" %} 
+                                        class="messages-success"
+                                    {% else %} 
+                                        class="messages-error" 
+                                    {% endif %}>
+                                        {{ message }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+
+                            <div class="form-group">
+                                <button class="btn btn-primary btn-block" type="submit">Login</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+
+{% block javascript %}
+<script>
+    (function () {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>
+{% endblock javascript %}

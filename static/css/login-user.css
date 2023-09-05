@@ -1,0 +1,13 @@
+.messages{
+    font-size: small;
+    padding-top: 5px;
+    text-align: center;
+}
+
+.messages-success{
+    color: green;
+}
+
+.messages-error{
+    color: red;
+}
